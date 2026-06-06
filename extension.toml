@@ -1,0 +1,12 @@
+id = "ndim-lsp-zed"
+name = "ndim-lsp"
+version = "0.0.1"
+schema_version = 1
+authors = ["Artur A. Galstyan <mail@arturgalstyan.dev>"]
+description = "Zed extension for ndim-lsp"
+repository = "https://github.com/Artur-Galstyan/ndim-lsp-zed"
+
+
+[language_servers.ndim-lsp]
+name = "ndim-lsp"
+languages = ["Python"]
