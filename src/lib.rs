@@ -59,6 +59,16 @@ impl zed::Extension for NdimLspExtension {
 
         Ok(Command { command, args, env })
     }
+
+    fn language_server_initialization_options(
+        &mut self,
+        _language_server_id: &LanguageServerId,
+        worktree: &Worktree,
+    ) -> Result<Option<zed::serde_json::Value>> {
+        Ok(LspSettings::for_worktree(BINARY_NAME, worktree)
+            .ok()
+            .and_then(|s| s.initialization_options))
+    }
 }
 
 zed::register_extension!(NdimLspExtension);
