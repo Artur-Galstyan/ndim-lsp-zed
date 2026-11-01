@@ -67,7 +67,18 @@ impl zed::Extension for NdimLspExtension {
     ) -> Result<Option<zed::serde_json::Value>> {
         Ok(LspSettings::for_worktree(BINARY_NAME, worktree)
             .ok()
-            .and_then(|s| s.initialization_options))
+            .and_then(|s| s.initialization_options.or(s.settings)))
+    }
+
+    fn language_server_workspace_configuration(
+        &mut self,
+        _language_server_id: &LanguageServerId,
+        worktree: &Worktree,
+    ) -> Result<Option<zed::serde_json::Value>> {
+        Ok(LspSettings::for_worktree(BINARY_NAME, worktree)
+            .ok()
+            .and_then(|s| s.settings.or(s.initialization_options))
+            .map(|options| zed::serde_json::json!({ BINARY_NAME: options })))
     }
 }
 
